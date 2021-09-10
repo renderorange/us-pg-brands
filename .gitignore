@@ -1,0 +1,5 @@
+/.prove
+*~
+*.swp
+*.swo
+tmp/
