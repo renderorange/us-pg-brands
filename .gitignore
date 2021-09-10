@@ -3,3 +3,5 @@
 *.swp
 *.swo
 tmp/
+package-lock.json
+node_modules/
