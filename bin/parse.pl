@@ -85,7 +85,7 @@ parse.pl - load and extract the desired data from C<props.json>
 
 =head1 DESCRIPTION
 
-C<parse.pl> loads the C<props.json> file, then extracts the desired data and outputs a new json file.
+C<parse.pl> loads the C<props.json> file, then extracts the desired data and outputs C<brands.json>.
 
 =head1 OPTIONS
 
