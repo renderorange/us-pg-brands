@@ -31,23 +31,45 @@ my $props_json = File::Slurp::read_file( $props_json_file )
     or die "read $props_json_file: " . $@ . "\n";
 my $props_data = JSON::Tiny::decode_json $props_json;
 
+die "props_data could not be found\n"
+    unless $props_data;
+
 my $brands_data = [];
 foreach my $brand_category ( @{$props_data->{brandCategoryItems}{children}} ) {
     foreach my $brand ( @{$brand_category->{children}} ) {
+        my $name = clean( $brand->{props}{label} );
+        my $description = clean( $brand->{props}{description} );
+        my $url = clean( $brand->{props}{link}{props}{url} );
+        my $image = 'https:' . clean( $brand->{props}{image}{props}{url} );
+
         push @{$brands_data},
              {
-                 name => $brand->{props}{label},
-                 description => $brand->{props}{description},
-                 url => $brand->{props}{link}{props}{url},
-                 image => 'https:' . $brand->{props}{image}{props}{url},
+                 name => $name,
+                 description => $description,
+                 url => $url,
+                 image => $image,
              };
     }
 }
+
+die "brands_data was not built\n"
+    unless $brands_data;
 
 my $brands_json = JSON::Tiny::encode_json $brands_data;
 
 File::Slurp::write_file( $brands_json_file, { atomic => 1, binmode => ':raw' }, $brands_json )
     or die "write $brands_json_file: " . $@ . "\n";
+
+sub clean {
+    my $data = shift;
+
+    return unless $data;
+
+    $data =~ s/\n+$//g;
+    $data =~ s/\s+$//g;
+
+    return $data;
+}
 
 __END__
 
