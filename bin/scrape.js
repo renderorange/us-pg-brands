@@ -15,7 +15,7 @@ axios.get( 'https://us.pg.com/brands/' )
         let brands_props = dom.window.document.querySelector( '[data-react-component="BrandContainer"]' )
                               .getAttribute( 'data-react-props' );
 
-        if ( brand_props ) {
+        if ( brands_props ) {
             fs.writeFile( path.resolve( __dirname, './../data/props.json' ), brands_props, function( err, data ) {
                 if ( err ) {
                     return console.log( err );
